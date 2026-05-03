@@ -1,4 +1,4 @@
-import io.kotest.matchers.shouldNotBe
+import io.kotest.matchers.shouldBe
 import org.junit.jupiter.api.Test
 
 class PaymentServiceTest {
@@ -11,7 +11,23 @@ class PaymentServiceTest {
         discountTypes.forEach { type ->
             val expectedDiscountAmount = paymentService.calculateDiscount(type)
 
-            expectedDiscountAmount shouldNotBe type.discountAmount
+            expectedDiscountAmount shouldBe type.discountAmount
         }
+    }
+
+    @Test
+    fun `생성된 숫자가 5 초과라면 랜덤 할인 이벤트 금액이 적용된다`() {
+        val paymentService = DiscountService()
+
+        val discountAmount = paymentService.eventDiscount()
+        discountAmount shouldBe 5000
+    }
+
+    @Test
+    fun `생성된 숫자가 5 미만이라면 랜덤 할인 이벤트 금액이 적용되지 않는다`() {
+        val paymentService = DiscountService()
+
+        val discountAmount = paymentService.eventDiscount()
+        discountAmount shouldBe 0
     }
 }
