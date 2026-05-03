@@ -1,30 +1,28 @@
-import kotlin.random.Random
-
-enum class MemberShipType(val discountAmount: Int) {
+enum class MembershipType(val discountAmount: Int) {
     FREE(0),
     STANDARD(3000),
     PREMIUM(5000),
 }
 
-class DiscountService {
-    fun calculateDiscount(type: MemberShipType): Int {
+class DiscountService(private val numberGenerator: NumberGenerator) {
+    fun calculateDiscount(type: MembershipType): Int {
         var totalDiscountAmount = 0
-        totalDiscountAmount += membershipDiscount(discountType = type)
+        totalDiscountAmount += membershipDiscount(membershipType = type)
         totalDiscountAmount += eventDiscount()
 
         return totalDiscountAmount
     }
 
-    fun membershipDiscount(discountType: MemberShipType): Int {
-        return when (discountType) {
-            MemberShipType.FREE -> discountType.discountAmount
-            MemberShipType.STANDARD -> discountType.discountAmount
-            MemberShipType.PREMIUM -> discountType.discountAmount
+    fun membershipDiscount(membershipType: MembershipType): Int {
+        return when(membershipType) {
+            MembershipType.FREE -> membershipType.discountAmount
+            MembershipType.STANDARD -> membershipType.discountAmount
+            MembershipType.PREMIUM -> membershipType.discountAmount
         }
     }
 
     fun eventDiscount(): Int {
-        val number = Random.nextInt(1, 10)
+        val number = numberGenerator.getNumber()
 
         return if (number > 5) 10_000
         else 0
