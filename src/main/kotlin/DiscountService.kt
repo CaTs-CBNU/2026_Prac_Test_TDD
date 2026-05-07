@@ -1,3 +1,5 @@
+import util.NumberGenerator
+
 enum class MembershipType(val discountAmount: Int) {
     FREE(0),
     STANDARD(3000),

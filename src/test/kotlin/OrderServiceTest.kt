@@ -1,12 +1,13 @@
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import testFixture.UnderFiveNumberGenerator
 import kotlin.test.Test
 
 class OrderServiceTest {
 
     @Test
     fun `주문 객체는 상품 이름과 총 결제 금액을 갖는다`() {
-        val discountService = DiscountService(numberGenerator = UnderFiveNumberGenerator())
+        val discountService = DiscountService(numberGenerator = UnderFiveNumberGenerator)
         val orderService = OrderService(discountService = discountService)
 
         val order = orderService.createOrder(
@@ -22,7 +23,7 @@ class OrderServiceTest {
 
     @Test
     fun `할인의 적용여부가 주문 객체에 반영된다`() {
-        val discountService = DiscountService(numberGenerator = UnderFiveNumberGenerator())
+        val discountService = DiscountService(numberGenerator = UnderFiveNumberGenerator)
         val orderService = OrderService(discountService = discountService)
 
         val notDiscountedOrder = orderService.createOrder(
